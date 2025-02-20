@@ -162,21 +162,21 @@ def _run_unidentified_tool(
 @LSP_SERVER.feature(lsp.TEXT_DOCUMENT_DID_OPEN)
 def did_open(params: lsp.DidOpenTextDocumentParams) -> None:
     """LSP handler for textDocument/didOpen request."""
-    document = LSP_SERVER.workspace.get_text_document(params.text_document.uri)
+    document = LSP_SERVER.workspace.get_document(params.text_document.uri)
     _linting_helper(document)
 
 
 @LSP_SERVER.feature(lsp.TEXT_DOCUMENT_DID_SAVE)
 def did_save(params: lsp.DidSaveTextDocumentParams) -> None:
     """LSP handler for textDocument/didSave request."""
-    document = LSP_SERVER.workspace.get_text_document(params.text_document.uri)
+    document = LSP_SERVER.workspace.get_document(params.text_document.uri)
     _linting_helper(document)
 
 
 @LSP_SERVER.feature(lsp.TEXT_DOCUMENT_DID_CLOSE)
 def did_close(params: lsp.DidCloseTextDocumentParams) -> None:
     """LSP handler for textDocument/didClose request."""
-    document = LSP_SERVER.workspace.get_text_document(params.text_document.uri)
+    document = LSP_SERVER.workspace.get_document(params.text_document.uri)
     settings = _get_settings_by_document(document)
     if settings["reportingScope"] == "file":
         # Publishing empty diagnostics to clear the entries for this file.
@@ -705,7 +705,10 @@ def _run_tool_on_document(
         argv += _get_dmypy_args(settings, "run")
     argv += TOOL_ARGS + settings["args"] + extra_args
     if settings["reportingScope"] == "file":
-        argv += [document.path]
+        # pygls normalizes the path to lowercase on windows, but we need to resolve the
+        # correct capitalization to avoid https://github.com/python/mypy/issues/18590#issuecomment-2630249041
+        argv += [str(pathlib.Path(document.path).resolve())]
+        cwd = str(pathlib.Path(cwd).resolve())
     else:
         argv += [cwd]
 
