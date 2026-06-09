@@ -59,240 +59,71 @@ There are several settings you can configure to customize the behavior of this e
 				Example:
 				<br />
 				<code>
-					"mypy-type-checker.args" = ["--config-file=<file>"]
-				</code>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				mypy-type-checker.cwd
-			</td>
-			<td>
-				<code>
-					${workspaceFolder}
-				</code>
-			</td>
-			<td>
-				Sets the current working directory used to lint Python files with Mypy. By default, it uses the root directory of the workspace
-				<code>
-					${workspaceFolder}
-				</code>
-				. You can set it to
-				<code>
-					${fileDirname}
-				</code>
-				to use the parent folder of the file being linted as the working directory for Mypy. You can also set it to
-				<code>
-					${nearestConfig}
-				</code>
-				to use the nearest parent/ancestor folder which contains a
-				<code>
-					mypy.ini
-				</code>
-				,
-				<code>
-					.mypy.ini
-				</code>
-				,
-				<code>
-					pyproject.toml
-				</code>
-				, or
-				<code>
-					setup.cfg
-				</code>
-				file.
-			</td>
-		</tr>
-		<tr>
-			<td>
-				mypy-type-checker.severity
-			</td>
-			<td>
-				<code>
-					{ "error": "Error", "note": "Information" }
-				</code>
-			</td>
-			<td>
-				Mapping of Mypy's message types to VS Code's diagnostic severity levels as displayed in the Problems window. You can also use it to override specific Mypy error codes.
-				<br />
-				For example:
-				<code>
-					{ "error": "Error", "note": "Information", "name-defined": "Warning" }
-				</code>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				mypy-type-checker.path
-			</td>
-			<td>
-				<code>
-					[]
-				</code>
-			</td>
-			<td>
-				Path or command to be used by the extension to type check Python files with Mypy. Accepts an array of a single or multiple strings. If passing a command, each argument should be provided as a separate string in the array. If set to ["mypy"], it will use the version of Mypy available in the PATH environment variable. Note: Using this option may slowdown type checking.
-				<br />
-				Examples:
-				<br />
-				-
-				<code>
-					["~/global_env/mypy"]
-				</code>
-				<br />
-				-
-				<code>
-					["conda", "run", "-n", "lint_env", "python", "-m", "mypy"]
-				</code>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				mypy-type-checker.interpreter
-			</td>
-			<td>
-				<code>
-					[]
-				</code>
-			</td>
-			<td>
-				Path to a Python executable or a command that will be used to launch the Mypy server and any subprocess. Accepts an array of a single or multiple strings. When set to
-				<code>
-					[]
-				</code>
-				, the extension will use the path to the selected Python interpreter. If passing a command, each argument should be provided as a separate string in the array.
-			</td>
-		</tr>
-		<tr>
-			<td>
-				mypy-type-checker.importStrategy
-			</td>
-			<td>
-				<code>
-					useBundled
-				</code>
-			</td>
-			<td>
-				Defines which Mypy binary to be used to type check Python files. When set to
-				<code>
-					useBundled
-				</code>
-				, the extension will use the Mypy binary that is shipped with the extension. When set to fromEnvironment, the extension will attempt to use the Mypy binary and all dependencies that are available in the currently selected environment. Note: If the extension can't find a valid Mypy binary in the selected environment, it will fallback to using the Mypy binary that is shipped with the extension. Note: The
-				<code>
-					mypy-type-checker.path
-				</code>
-				setting takes precedence and overrides the behavior of
-				<code>
-					mypy-type-checker.importStrategy
-				</code>
-				.
-			</td>
-		</tr>
-		<tr>
-			<td>
-				mypy-type-checker.showNotifications
-			</td>
-			<td>
-				<code>
-					off
-				</code>
-			</td>
-			<td>
-				Controls when notifications are shown by this extension. Accepted values are
-				<code>
-					onError
-				</code>
-				,
-				<code>
-					onWarning
-				</code>
-				,
-				<code>
-					always
-				</code>
-				and
-				<code>
-					off
-				</code>
-				.
-			</td>
-		</tr>
-		<tr>
-			<td>
-				mypy-type-checker.reportingScope
-			</td>
-			<td>
-				<code>
-					file
-				</code>
-			</td>
-			<td>
-				(experimental) Controls the scope of Mypy's problem reporting. If set to
-				<code>
-					file
-				</code>
-				, Mypy will limit its problem reporting to the files currently open in the editor. If set to
-				<code>
-					workspace
-				</code>
-				, Mypy will extend its problem reporting to include all files within the workspace.
-      If set to
-				<code>
-					>custom
-				</code>
-				, Mypy will only report problems for files specified in the [Mypy configuration](https://mypy.readthedocs.io/en/stable/config_file.html#confval-files)
-			</td>
-		</tr>
-		<tr>
-			<td>
-				mypy-type-checker.preferDaemon
-			</td>
-			<td>
-				<code>
-					true
-				</code>
-			</td>
-			<td>
-				(experimental) Whether the Mypy daemon (
-				<code>
-					dmypy
-				</code>
-				) will take precedence over
-				<code>
-					mypy
-				</code>
-				for type checking. Note: if
-				<code>
-					mypy-type-checker.reportingScope
-				</code>
-				is set to
-				<code>
-					workspace
-				</code>
-				, enabling the Mypy daemon will offer a faster type checking experience. This setting will be overridden if
-				<code>
-					mypy-type-checker.path
-				</code>
-				is set.
-				<tr>
-					<td>
-						mypy-type-checker.daemonStatusFile
-					</td>
-					<td>
-						<code>
-							""
-						</code>
-					</td>
-					<td>
-						(experimental) Path to the status file used by the Mypy daemon (
-						<code>
-							dmypy
-						</code>
-						).
+					"mypy-type-checker.args" = ["--config-file=
+					<file>
+						"]
 						<tr>
 							<td>
-								mypy-type-checker.ignorePatterns
+								mypy-type-checker.cwd
+							</td>
+							<td>
+								<code>
+									${workspaceFolder}
+								</code>
+							</td>
+							<td>
+								Sets the current working directory used to lint Python files with Mypy. By default, it uses the root directory of the workspace
+								<code>
+									${workspaceFolder}
+								</code>
+								. You can set it to
+								<code>
+									${fileDirname}
+								</code>
+								to use the parent folder of the file being linted as the working directory for Mypy. You can also set it to
+								<code>
+									${nearestConfig}
+								</code>
+								to use the nearest parent/ancestor folder which contains a
+								<code>
+									mypy.ini
+								</code>
+								,
+								<code>
+									.mypy.ini
+								</code>
+								,
+								<code>
+									pyproject.toml
+								</code>
+								, or
+								<code>
+									setup.cfg
+								</code>
+								file.
+							</td>
+						</tr>
+						<tr>
+							<td>
+								mypy-type-checker.severity
+							</td>
+							<td>
+								<code>
+									{ "error": "Error", "note": "Information" }
+								</code>
+							</td>
+							<td>
+								Mapping of Mypy's message types to VS Code's diagnostic severity levels as displayed in the Problems window. You can also use it to override specific Mypy error codes.
+								<br />
+								For example:
+								<code>
+									{ "error": "Error", "note": "Information", "name-defined": "Warning" }
+								</code>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								mypy-type-checker.path
 							</td>
 							<td>
 								<code>
@@ -300,15 +131,187 @@ There are several settings you can configure to customize the behavior of this e
 								</code>
 							</td>
 							<td>
-								Configure
-								<a href="https://docs.python.org/3/library/fnmatch.html">
-									glob patterns
-								</a>
-								as supported by the fnmatch Python library to exclude files or folders from being type checked by Mypy.
+								Path or command to be used by the extension to type check Python files with Mypy. Accepts an array of a single or multiple strings. If passing a command, each argument should be provided as a separate string in the array. If set to ["mypy"], it will use the version of Mypy available in the PATH environment variable. Note: Using this option may slowdown type checking.
+								<br />
+								Examples:
+								<br />
+								-
+								<code>
+									["~/global_env/mypy"]
+								</code>
+								<br />
+								-
+								<code>
+									["conda", "run", "-n", "lint_env", "python", "-m", "mypy"]
+								</code>
 							</td>
 						</tr>
-					</td>
-				</tr>
+						<tr>
+							<td>
+								mypy-type-checker.interpreter
+							</td>
+							<td>
+								<code>
+									[]
+								</code>
+							</td>
+							<td>
+								Path to a Python executable or a command that will be used to launch the Mypy server and any subprocess. Accepts an array of a single or multiple strings. When set to
+								<code>
+									[]
+								</code>
+								, the extension will use the path to the selected Python interpreter. If passing a command, each argument should be provided as a separate string in the array.
+							</td>
+						</tr>
+						<tr>
+							<td>
+								mypy-type-checker.importStrategy
+							</td>
+							<td>
+								<code>
+									useBundled
+								</code>
+							</td>
+							<td>
+								Defines which Mypy binary to be used to type check Python files. When set to
+								<code>
+									useBundled
+								</code>
+								, the extension will use the Mypy binary that is shipped with the extension. When set to fromEnvironment, the extension will attempt to use the Mypy binary and all dependencies that are available in the currently selected environment. Note: If the extension can't find a valid Mypy binary in the selected environment, it will fallback to using the Mypy binary that is shipped with the extension. Note: The
+								<code>
+									mypy-type-checker.path
+								</code>
+								setting takes precedence and overrides the behavior of
+								<code>
+									mypy-type-checker.importStrategy
+								</code>
+								.
+							</td>
+						</tr>
+						<tr>
+							<td>
+								mypy-type-checker.showNotifications
+							</td>
+							<td>
+								<code>
+									off
+								</code>
+							</td>
+							<td>
+								Controls when notifications are shown by this extension. Accepted values are
+								<code>
+									onError
+								</code>
+								,
+								<code>
+									onWarning
+								</code>
+								,
+								<code>
+									always
+								</code>
+								and
+								<code>
+									off
+								</code>
+								.
+							</td>
+						</tr>
+						<tr>
+							<td>
+								mypy-type-checker.reportingScope
+							</td>
+							<td>
+								<code>
+									file
+								</code>
+							</td>
+							<td>
+								(experimental) Controls the scope of Mypy's problem reporting. If set to
+								<code>
+									file
+								</code>
+								, Mypy will limit its problem reporting to the files currently open in the editor. If set to
+								<code>
+									workspace
+								</code>
+								, Mypy will extend its problem reporting to include all files within the workspace.
+      If set to
+								<code>
+									>custom
+								</code>
+								, Mypy will only report problems for files specified in the [Mypy configuration](https://mypy.readthedocs.io/en/stable/config_file.html#confval-files)
+							</td>
+						</tr>
+						<tr>
+							<td>
+								mypy-type-checker.preferDaemon
+							</td>
+							<td>
+								<code>
+									true
+								</code>
+							</td>
+							<td>
+								(experimental) Whether the Mypy daemon (
+								<code>
+									dmypy
+								</code>
+								) will take precedence over
+								<code>
+									mypy
+								</code>
+								for type checking. Note: if
+								<code>
+									mypy-type-checker.reportingScope
+								</code>
+								is set to
+								<code>
+									workspace
+								</code>
+								, enabling the Mypy daemon will offer a faster type checking experience. This setting will be overridden if
+								<code>
+									mypy-type-checker.path
+								</code>
+								is set.
+								<tr>
+									<td>
+										mypy-type-checker.daemonStatusFile
+									</td>
+									<td>
+										<code>
+											""
+										</code>
+									</td>
+									<td>
+										(experimental) Path to the status file used by the Mypy daemon (
+										<code>
+											dmypy
+										</code>
+										).
+										<tr>
+											<td>
+												mypy-type-checker.ignorePatterns
+											</td>
+											<td>
+												<code>
+													[]
+												</code>
+											</td>
+											<td>
+												Configure
+												<a href="https://docs.python.org/3/library/fnmatch.html">
+													glob patterns
+												</a>
+												as supported by the fnmatch Python library to exclude files or folders from being type checked by Mypy.
+											</td>
+										</tr>
+									</td>
+								</tr>
+							</td>
+						</tr>
+					</file>
+				</code>
 			</td>
 		</tr>
 	</tbody>
